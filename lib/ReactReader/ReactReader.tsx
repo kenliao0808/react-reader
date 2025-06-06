@@ -62,6 +62,7 @@ export type IReactReaderProps = IEpubViewProps & {
   searchQuery?: string
   contextLength?: number
   onSearchResults?: (results: SearchResult[]) => void
+  renderTocToggle?: (props: { toggleToc: () => void; tocShown: boolean }) => React.ReactNode
 }
 
 type SearchResult = { cfi: string; excerpt: string }
@@ -343,7 +344,15 @@ export class ReactReader extends PureComponent<
             expandedToc ? readerStyles.containerExpanded : {}
           )}
         >
-          {showToc && this.renderTocToggle()}
+          {showToc &&
+            (this.props.renderTocToggle ? (
+              this.props.renderTocToggle({
+                toggleToc: this.toggleToc,
+                tocShown: this.state.expandedToc,
+              })
+            ) : (
+            this.renderTocToggle()
+          ))}
           <div style={readerStyles.titleArea}>{title}</div>
           <SwipeWrapper
             swipeProps={{
