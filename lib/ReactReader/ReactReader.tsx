@@ -344,15 +344,16 @@ export class ReactReader extends PureComponent<
             expandedToc ? readerStyles.containerExpanded : {}
           )}
         >
-          {showToc &&
-            (this.props.renderTocToggle ? (
-              this.props.renderTocToggle({
-                toggleToc: this.toggleToc,
-                tocShown: this.state.expandedToc,
-              })
-            ) : (
-            this.renderTocToggle()
-          ))}
+          {showToc && (
+            <>
+                {this.props.renderTocToggle
+                ? this.props.renderTocToggle({
+                    toggleToc: this.toggleToc,
+                    tocShown: this.state.expandedToc,
+                    })
+                : this.renderTocToggle()}
+            </>
+          )}
           <div style={readerStyles.titleArea}>{title}</div>
           <SwipeWrapper
             swipeProps={{
